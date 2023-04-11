@@ -9,11 +9,17 @@ producer = KafkaProducer(
   sasl_plain_password = password,
 )
 
-producer.send('my-dev-upstash-topic', key=b'truck0', value=b'message from truck0') # use the key for the same partition, e.g. for same truck
+# example will be for a truck sending gps info, a message
+truckValue = 0
+producer.send('my-dev-upstash', key=b'truck%d' % truckValue, value=b'message from truck') # use the key for the same partition, e.g. for same truck
+# could use f-strings but as byte code have to do a bit different with the %d
 
 
-# loop producing
-# for _ in range(100):
-#   producer.send('my-upstash-topic', b'some_message_bytes')
+# ...
+# # loop producing
+# for i in range(10):
+#   producer.send('my-dev-upstash', key=b'truck%d' % i, value=b'message from truck')
+#   # could use f-strings but as byte code have to do a bit different with the %d
+# ...
 
 producer.close()
