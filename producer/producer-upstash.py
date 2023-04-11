@@ -1,5 +1,5 @@
 from kafka import KafkaProducer
-from config import password, username # local file with credentials
+from ..upstashPackage.upstashCreds import password, username # local file with credentials
 
 producer = KafkaProducer(
   bootstrap_servers=['prompt-horse-11315-eu1-kafka.upstash.io:9092'],
