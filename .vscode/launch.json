@@ -5,12 +5,24 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Python: Module",
+            "name": "Python: Consumer",
+            "type": "python",
+            "request": "launch",
+            "module": "consumer.consumer-upstash",
+            "justMyCode": true,
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}/.upstashPackage/"
+            }
+        },
+        {
+            "name": "Python: Producer",
             "type": "python",
             "request": "launch",
             "module": "producer.producer-upstash",
             "justMyCode": true,
-            "env": {"PYTHONPATH": "${workspaceFolder}/.upstashPackage/"}
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}/.upstashPackage/"
+            }
         }
     ]
 }
