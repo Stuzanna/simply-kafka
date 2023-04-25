@@ -1,9 +1,9 @@
 from kafka import KafkaConsumer
-from upstashPackage.upstashCreds import username, password
+from upstashPackage.upstashCreds import username, password, bs_server # from local file with credentials
  
 consumer = KafkaConsumer(
   'my-dev-upstash',
-  bootstrap_servers=['prompt-horse-11315-eu1-kafka.upstash.io:9092'],
+  bootstrap_servers=[bs_server],
   sasl_mechanism='SCRAM-SHA-256',
   security_protocol='SASL_SSL',
   sasl_plain_username = username,
