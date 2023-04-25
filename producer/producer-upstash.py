@@ -1,8 +1,8 @@
 from kafka import KafkaProducer
-from upstashPackage.upstashCreds import password, username # local file with credentials
+from upstashPackage.upstashCreds import password, username, bs_server # local file with credentials
 
 producer = KafkaProducer(
-  bootstrap_servers=['prompt-horse-11315-eu1-kafka.upstash.io:9092'],
+  bootstrap_servers=[bs_server],
   sasl_mechanism='SCRAM-SHA-256',
   security_protocol='SASL_SSL',
   sasl_plain_username = username,
