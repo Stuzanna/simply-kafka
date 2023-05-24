@@ -1,4 +1,5 @@
 from kafka import KafkaProducer
+import time
 from upstashPackage.upstashCreds import password, username, bs_server # local file with credentials
 
 producer = KafkaProducer(
@@ -17,7 +18,8 @@ producer.send('my-dev-upstash', key=b'truck%d' % truckValue, value=b'message fro
 
 # ...
 # # loop producing
-# for i in range(10):
+# for i in range(100):
+#   time.sleep(0.25) # If need a pause within the loop
 #   producer.send('my-dev-upstash', key=b'truck%d' % i, value=b'message from truck')
 #   # could use f-strings but as byte code have to do a bit different with the %d
 # ...
