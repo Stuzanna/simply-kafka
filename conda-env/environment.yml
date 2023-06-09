@@ -3,20 +3,76 @@ channels:
   - conda-forge
   - defaults
 dependencies:
+  - appnope=0.1.2=py311hca03da5_1001
+  - asttokens=2.0.5=pyhd3eb1b0_0
+  - backcall=0.2.0=pyhd3eb1b0_0
+  - blas=1.0=openblas
+  - brotli=1.0.9=h1a28f6b_7
+  - brotli-bin=1.0.9=h1a28f6b_7
   - bzip2=1.0.8=h620ffc9_4
-  - ca-certificates=2023.5.7=hf0a4a13_0
+  - ca-certificates=2023.05.30=hca03da5_0
+  - contourpy=1.0.5=py311h48ca7d4_0
+  - cycler=0.11.0=pyhd3eb1b0_0
+  - decorator=5.1.1=pyhd3eb1b0_0
+  - executing=0.8.3=pyhd3eb1b0_0
+  - fonttools=4.25.0=pyhd3eb1b0_0
+  - freetype=2.12.1=h1192e45_0
+  - giflib=5.2.1=h80987f9_3
+  - ipython=8.12.0=py311hca03da5_0
+  - jedi=0.18.1=py311hca03da5_1
+  - jpeg=9e=h80987f9_1
   - kafka-python=2.0.2=pyh9f0ad1d_0
+  - kiwisolver=1.4.4=py311h313beb8_0
+  - lcms2=2.12=hba8e193_0
+  - lerc=3.0=hc377ac9_0
+  - libbrotlicommon=1.0.9=h1a28f6b_7
+  - libbrotlidec=1.0.9=h1a28f6b_7
+  - libbrotlienc=1.0.9=h1a28f6b_7
+  - libcxx=14.0.6=h848a8c0_0
+  - libdeflate=1.17=h80987f9_0
   - libffi=3.4.4=hca03da5_0
+  - libgfortran=5.0.0=11_3_0_hca03da5_28
+  - libgfortran5=11.3.0=h009349e_28
+  - libopenblas=0.3.21=h269037a_0
+  - libpng=1.6.39=h80987f9_0
+  - libtiff=4.5.0=h313beb8_2
+  - libwebp=1.2.4=ha3663a8_1
+  - libwebp-base=1.2.4=h80987f9_1
+  - llvm-openmp=14.0.6=hc6e5704_0
+  - lz4-c=1.9.4=h313beb8_0
+  - matplotlib=3.7.1=py311hca03da5_1
+  - matplotlib-base=3.7.1=py311h7aedaa7_1
+  - matplotlib-inline=0.1.6=py311hca03da5_0
+  - munkres=1.1.4=py_0
   - ncurses=6.4=h313beb8_0
-  - openssl=1.1.1u=h53f4e23_0
+  - numpy=1.24.3=py311hb57d4eb_0
+  - numpy-base=1.24.3=py311h1d85a46_0
+  - openssl=1.1.1t=h1a28f6b_0
+  - packaging=23.0=py311hca03da5_0
+  - parso=0.8.3=pyhd3eb1b0_0
+  - pexpect=4.8.0=pyhd3eb1b0_3
+  - pickleshare=0.7.5=pyhd3eb1b0_1003
+  - pillow=9.4.0=py311h313beb8_0
   - pip=23.0.1=py311hca03da5_0
+  - prompt-toolkit=3.0.36=py311hca03da5_0
+  - ptyprocess=0.7.0=pyhd3eb1b0_2
+  - pure_eval=0.2.2=pyhd3eb1b0_0
+  - pygments=2.15.1=py311hca03da5_1
+  - pyparsing=3.0.9=py311hca03da5_0
   - python=3.11.3=hc0d8a6c_0
+  - python-dateutil=2.8.2=pyhd3eb1b0_0
   - readline=8.2=h1a28f6b_0
   - setuptools=67.8.0=py311hca03da5_0
+  - six=1.16.0=pyhd3eb1b0_1
   - sqlite=3.41.2=h80987f9_0
+  - stack_data=0.2.0=pyhd3eb1b0_0
   - tk=8.6.12=hb8d0fd4_0
+  - tornado=6.2=py311h80987f9_0
+  - traitlets=5.7.1=py311hca03da5_0
   - tzdata=2023c=h04d1e81_0
+  - wcwidth=0.2.5=pyhd3eb1b0_0
   - wheel=0.38.4=py311hca03da5_0
   - xz=5.4.2=h80987f9_0
   - zlib=1.2.13=h5a0b063_0
+  - zstd=1.5.5=hd90d995_0
 prefix: /opt/homebrew/Caskroom/miniconda/base/envs/upstash-python
