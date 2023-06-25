@@ -131,3 +131,7 @@ dmypy.json
 # Appended to .gitignore
 producer/config.py
 upstashPackage/upstashCreds.py
+
+# File types
+*.drawio.bkp
+*.drawio.dtmp
