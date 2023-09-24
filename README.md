@@ -1,5 +1,7 @@
-# kafka-app
-My Kafka app for learning Kafka.
+
+My project building a Kafka app for learning Kafka.
+
+Read on for architecture and future expansion considerations.
 
 ## Current Architecture
 What the app looks like today.
@@ -12,11 +14,6 @@ Where I would like to get to with the app.
 ## Experimental Architecture
 What could be, suggestions welcome.
 ![Experimental architecture](./diagrams/Experimental%20Architecture.drawio.png)
-
-# WIP Macro Checklist
-- [X] Produce a message
-- [X] Consume a message
-- [ ] Do something useful with the consumed message  
 
 ## Consider
 - [ ] Check against a schema registry

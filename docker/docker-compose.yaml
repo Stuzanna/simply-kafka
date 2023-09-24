@@ -1,5 +1,27 @@
 version: '3.7'
 services:
+
+  conduktor-gateway:
+    image: conduktor/conduktor-gateway:2.1.5
+    hostname: conduktor-gateway
+    container_name: conduktor-gateway
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: kafka1:9092
+      # KAFKA_SASL_MECHANISM: PLAIN
+      # KAFKA_SECURITY_PROTOCOL: SASL_PLAINTEXT
+      GATEWAY_SECURITY_PROTOCOL: SASL_PLAINTEXT
+      GATEWAY_ADVERTISED_HOST: conduktor-gateway
+      GATEWAY_FEATURE_FLAGS_MULTI_TENANCY: true
+    healthcheck:
+      test: curl localhost:8888/health
+      interval: 5s
+      retries: 25
+    depends_on:
+      kafka1:
+        condition: service_healthy
+      kafka2:
+        condition: service_healthy
+
   zookeeper:
     image: confluentinc/cp-zookeeper:latest
     hostname: zookeeper
@@ -82,32 +104,6 @@ services:
     healthcheck:
       test: nc -zv localhost 8888 || exit 1
 
-  gateway:
-    image: conduktor/conduktor-proxy:1.8.2.1-amd64
-    hostname: gateway
-    container_name: gateway
-    # Compose implementations SHOULD always pull the image from the registry. Remove this if we stick to a particular version.
-    pull_policy: always
-    ports:
-      - "8888:8888"
-    environment:
-      KAFKA_BOOTSTRAP_SERVERS: kafka1:9092,kafka2:9092
-      KAFKA_SEND_BUFFER_BYTES: 1300000
-      KAFKA_RECEIVE_BUFFER_BYTES: 1300000
-      AUTHENTICATION_AUTHENTICATOR_TYPE: SASL_PLAIN
-      USER_POOL_TYPE: JWT
-      USER_POOL_SECRET_KEY: OaM4lG+xO5Gz10GB1apZ2XDUuWw/sK1H+XXcgExpYm2YEHgnvEf63q9TJraebD3SQb/JzefcZkUEKz/8V5V+Fg==
-      PROXY_HOST: gateway
-      SCHEMA_REGISTRY_HOST: http://schema-registry:8081
-      FEATURE_FLAGS_JWT_TOKEN_ENDPOINT: true
-      FEATURE_FLAGS_AUDIT: true
-      FEATURE_FLAGS_CACHING: false
-      ADMIN_API_USERS: "[{username: superUser, password: superUser, admin: true}]"
-    depends_on:
-      kafka1:
-        condition: service_healthy
-      kafka2:
-        condition: service_healthy
 
   kafka-client:
     image: confluentinc/cp-kafka:latest

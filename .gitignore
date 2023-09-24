@@ -1,3 +1,11 @@
+# Local creds
+producer/config.py
+upstashPackage/upstashCreds.py
+
+# Diagram temp files
+*.drawio.bkp
+*.drawio.dtmp
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -127,11 +135,3 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
-
-# Appended to .gitignore
-producer/config.py
-upstashPackage/upstashCreds.py
-
-# File types
-*.drawio.bkp
-*.drawio.dtmp
