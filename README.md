@@ -1,8 +1,6 @@
 
 My project building a Kafka app for learning Kafka.
 
-Read on for architecture and future expansion considerations.
-
 ## Current Architecture
 What the app looks like today.
 ![Current architecture](./diagrams/Current%20Architecture.drawio.png)
