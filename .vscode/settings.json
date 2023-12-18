@@ -1,4 +1,8 @@
 {
-    "python.analysis.extraPaths": ["${workspaceFolder}/upstashPackage/"]
+    "python.analysis.extraPaths": ["${workspaceFolder}/upstashPackage/"],
+
+    "terminal.integrated.shell.osx": "/bin/zsh",
+    "terminal.integrated.defaultProfile.linux": "zsh",
+    "terminal.integrated.fontFamily": "MesloLGS NF",
     
 }
