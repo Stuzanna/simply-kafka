@@ -2,8 +2,11 @@
 My project building a Kafka app for learning Kafka.
 
 ## Current Architecture
-What the app looks like today.
-![Current architecture](./diagrams/Current%20Architecture.drawio.png)
+What the app looks like today.  
+
+![Simple Local Streamer](./diagrams/Simple%20Local%20Streamer.drawio.png)  
+
+![Original Starting Architecture](./diagrams/Original%20Starting%20Architecture.drawio.png)
 
 ## Target Architecture
 Where I would like to get to with the app.
@@ -14,10 +17,10 @@ What could be, suggestions welcome.
 ![Experimental architecture](./diagrams/Experimental%20Architecture.drawio.png)
 
 ## Consider
+- [X] Setup a more useful stream
 - [ ] Check against a schema registry
 - [ ] Dockerise
 - [ ] Connectors
 - [ ] Postgres or Aiven connection
 - [ ] Pandas conneciton
-- [ ] Setup a more useful stream
 
