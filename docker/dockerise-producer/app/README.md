@@ -1,0 +1,1 @@
+docker build -t stu-py-data-gen:0.x -f ./Dockerfile ./
