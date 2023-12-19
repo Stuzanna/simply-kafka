@@ -1,9 +1,8 @@
-# Local creds
-producer/config.py
-upstashPackage/upstashCreds.py
-
 # Local env build
 aiven-demo
+
+# Local VS code settings
+.vscode/settings.json
 
 # Diagram temp files
 *.drawio.bkp

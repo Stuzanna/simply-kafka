@@ -6,6 +6,9 @@ What the app looks like today.
 
 ![Simple Local Streamer](./diagrams/Simple%20Local%20Streamer.drawio.png)  
 
+
+Optionally may use the simple producers for producing to Upstash.
+
 ![Original Starting Architecture](./diagrams/Original%20Starting%20Architecture.drawio.png)
 
 ## Target Architecture
@@ -13,7 +16,7 @@ Where I would like to get to with the app.
 ![Target architecture](./diagrams/Target%20Architecture.drawio.png)
 
 ## Experimental Architecture
-What could be, suggestions welcome.
+What could be...
 ![Experimental architecture](./diagrams/Experimental%20Architecture.drawio.png)
 
 ## Consider

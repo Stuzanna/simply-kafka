@@ -1,6 +1,7 @@
 from kafka import KafkaProducer
 import time
 from upstashPackage.upstashCreds import password, username, bs_server # local file with credentials
+# if issues, add this to the your vs code worksapce settings: "python.analysis.extraPaths": ["${workspaceFolder}/upstashPackage/"]
 
 producer = KafkaProducer(
   bootstrap_servers=[bs_server],

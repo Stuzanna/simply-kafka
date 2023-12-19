@@ -5,11 +5,9 @@ producer = KafkaProducer(
 )
 
 
-# the 'b' prefix in the below code indicates that the string is a bytes object, rather than a regular string.
-# The b prefix is used to create a bytes object from a string literal.
-
 producer.send('topic0', key=b'mykey', value=b'myMessageValue') # sends 1 message with a key
-
+# the 'b' prefix indicates that the string is a bytes object, rather than a regular string
+# the b prefix is used to create a bytes object from a string literal
 
 # ...
 # for _ in range(10000):
