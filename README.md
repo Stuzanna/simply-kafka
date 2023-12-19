@@ -18,8 +18,8 @@ What could be, suggestions welcome.
 
 ## Consider
 - [X] Setup a more useful stream
+- [X] Dockerise
 - [ ] Check against a schema registry
-- [ ] Dockerise
 - [ ] Connectors
 - [ ] Postgres or Aiven connection
 - [ ] Pandas conneciton
