@@ -2,6 +2,9 @@
 producer/config.py
 upstashPackage/upstashCreds.py
 
+# Local env build
+aiven-demo
+
 # Diagram temp files
 *.drawio.bkp
 *.drawio.dtmp

@@ -1,0 +1,1 @@
+[Aiven demo](https://aiven.io/developer/create-your-own-data-stream-for-kafka-with-python-and-faker) on creating customer data generator.
