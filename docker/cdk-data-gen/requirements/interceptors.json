@@ -1,0 +1,113 @@
+[
+    {
+      "cluster": "passthrough",
+      "pluginName": "guard-create-project-topics",
+      "pluginConfig": {
+        "name": "guard-create-project-topics",
+        "priority": 100,
+        "pluginClass": "io.conduktor.gateway.interceptor.safeguard.CreateTopicPolicyPlugin",
+        "config": {
+          "topic": "project-.*",
+          "numPartition": {
+            "min": 1,
+            "max": 3,
+            "action": "BLOCK"
+          }
+        }
+      }
+    },
+    {
+        "cluster": "passthrough",
+        "pluginName": "guard-produce-policy",
+        "pluginConfig": {
+          "priority": 100,
+          "pluginClass": "io.conduktor.gateway.interceptor.safeguard.ProducePolicyPlugin",
+          "config": {
+            "acks": {
+              "value": [
+                -1
+              ],
+              "action": "BLOCK"
+            },
+            "compressions": {
+              "value": [
+                "GZIP",
+                "LZ4",
+                "ZSTD",
+                "SNAPPY"
+              ],
+              "action": "BLOCK"
+            }
+          }
+        }
+      },
+    {
+      "cluster": "passthrough",
+      "pluginName": "encrypt-full-message-on-produce",
+      "pluginConfig": {
+        "name": "full-message-encrypt",
+        "priority": 100,
+        "pluginClass": "io.conduktor.gateway.interceptor.EncryptPlugin",
+        "config": {
+            "topic": "^[A-Za-z]*_encrypted$",
+            "payload": {
+              "keySecretId": "myKeySecretId",
+              "algorithm": {
+                  "type": "AES_GCM",
+                  "kms": "IN_MEMORY"
+              }
+            }
+        }
+      }
+    },
+    {
+      "cluster": "passthrough",
+      "pluginName": "decrypt-full-message-on-consume",
+      "pluginConfig":{
+        "name": "full-message-decrypt",
+        "priority": 100,
+        "pluginClass": "io.conduktor.gateway.interceptor.DecryptPlugin",
+        "config": {
+           "topic": "^[A-Za-z]*_encrypted$"
+        }
+     }
+    },
+    {
+      "cluster": "passthrough",
+      "pluginName": "mask-sensitive-fields",
+      "pluginConfig":{
+        "name": "mask-sensitive-fields",
+        "priority": 100,
+        "pluginClass": "io.conduktor.gateway.interceptor.FieldLevelDataMaskingPlugin",
+        "config": {
+          "topic": "^[A-Za-z]*_masked$",
+          "schemaRegistryConfig": {
+            "host": "http://redpanda-0:8081"
+          },
+          "policies": [
+            {
+              "name": "Mask credit card",
+              "rule": {
+                "type": "MASK_ALL"
+              },
+              "fields": [
+                "profile.creditCardNumber",
+                "contact.email"
+              ]
+            },
+            {
+              "name": "Partial mask phone",
+              "rule": {
+                "type": "MASK_FIRST_N",
+                "maskingChar": "*",
+                "numberOfChars": 9
+              },
+              "fields": [
+                "contact.phone"
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ]
