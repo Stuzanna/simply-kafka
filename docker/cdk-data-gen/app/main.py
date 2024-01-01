@@ -1,23 +1,22 @@
-import json
-import random
-import time
 
 from kafka import KafkaProducer
 from kafka import KafkaAdminClient
 from kafka.admin import NewTopic
-
-
 from faker import Faker
 
-from customerProducer import produceCustomer
 from pizzaProducer import PizzaProvider
 from orderProducer import producePizzaOrder
+from customerProducer import produceCustomer
+from productProducer import produceProduct
 
+import json
+import random
+import time
 
 # --- Define Inputs ---
 # bootstrap_servers = "localhost:19092"
 bootstrap_servers = "redpanda-0:9092"
-topic_names = ["customers-py", "pizza-orders"]
+topic_names = ["customers", "pizza-orders", "products"]
 num_messages = 1000
 messageDelaySeconds = 2
 
@@ -50,7 +49,7 @@ for topic in topic_names:
         print(f"Topic '{topic}' exists. No need to create it.")
 
 
-# --- Bring in Faker for data generation(want to do in Conda, doing in pip as know works) ---
+# --- Bring in Faker for data generation ---
 
 fake = Faker()
 provider = PizzaProvider # from the imported module
@@ -61,15 +60,17 @@ fake.add_provider(provider)
 
 
 # --- Create the stream ---
-i = 0
+counter = 0
 
-while i < num_messages:
+while counter < num_messages:
     
-    key0, message0 = produceCustomer(i, fake)
-    key1, message1 = producePizzaOrder(i, fake)
+    key0, message0 = produceCustomer(counter, fake)
+    key1, message1 = producePizzaOrder(counter, fake)
+    key2, message2 = produceProduct(counter, fake)
 
     print(f"Sending to topic, '{topic_names[0]}', message:" + " {}".format(message0))
     print(f"Sending to topic, '{topic_names[1]}', message:" + " {}".format(message1))
+    print(f"Sending to topic, '{topic_names[2]}', message:" + " {}".format(message2))
 
     producer.send(
         topic_names[0],
@@ -81,11 +82,16 @@ while i < num_messages:
         key = key1,
         value = message1
                   )
+    producer.send(
+        topic_names[2],
+        key = key2,
+        value = message2
+                  )
     
     time.sleep(messageDelaySeconds)
 
-    if (i % num_messages) == 0:
+    if (counter % num_messages) == 0:
         producer.flush()
-    i = i + 1
+    counter = counter + 1
 
 producer.flush()
