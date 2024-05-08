@@ -1,5 +1,7 @@
 # Local env build
 aiven-demo
+local-dev/
+env2/
 
 # Local VS code settings
 .vscode/settings.json
