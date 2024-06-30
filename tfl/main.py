@@ -58,7 +58,8 @@ def get_tube_arrivals(line_id, stop_point_id, direction, app_key, retries=3, bac
 
 # --- Get data from the API ---
 
-load_dotenv() #load API key your .env file
+load_dotenv() #loads the API key your .env file
+# create a .env file containing your API key with the below variable
 app_key = os.getenv('TFL_API_KEY')
 
 stop="stockwell"
