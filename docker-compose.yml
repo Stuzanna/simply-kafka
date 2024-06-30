@@ -1,16 +1,6 @@
 version: '3'
 
 services:
-  # jupyter:
-  #   image: quay.io/jupyter/datascience-notebook:ubuntu-22.04
-  #   ports:
-  #     - "8088:8888" # host:container
-  #   environment:
-  #     - JUPYTER_ENABLE_LAB=yes
-  #   volumes:
-  #     - "$PWD:/home/jovyan/work"
-  #   # go to exec in the container to see tokens needed for secure login, or go to link it says (change port if not default)
-
   redpanda-0:
     command:
       - redpanda
@@ -73,17 +63,17 @@ services:
       CDK_CLUSTERS_0_SCHEMAREGISTRY_URL: "http://redpanda-0:18081"
       CDK_CLUSTERS_0_COLOR: "#6A57C8"
       CDK_CLUSTERS_0_ICON: "kafka"
-      CDK_CLUSTERS_1_ID: "cdk-gateway"
-      CDK_CLUSTERS_1_NAME: "cdk-gateway"
-      CDK_CLUSTERS_1_BOOTSTRAPSERVERS: "conduktor-gateway:6969"
-      CDK_CLUSTERS_1_SCHEMAREGISTRY_URL: "http://redpanda-0:18081"
-      CDK_CLUSTERS_1_KAFKAFLAVOR_URL: "http://conduktor-gateway:8888"
-      CDK_CLUSTERS_1_KAFKAFLAVOR_USER: "admin"
-      CDK_CLUSTERS_1_KAFKAFLAVOR_PASSWORD: "conduktor"
-      CDK_CLUSTERS_1_KAFKAFLAVOR_VIRTUALCLUSTER: "passthrough"
-      CDK_CLUSTERS_1_KAFKAFLAVOR_TYPE: "Gateway"
-      CDK_CLUSTERS_1_COLOR: "#6A57C8"
-      CDK_CLUSTERS_1_ICON: "dog"
+      # CDK_CLUSTERS_1_ID: "cdk-gateway"
+      # CDK_CLUSTERS_1_NAME: "cdk-gateway"
+      # CDK_CLUSTERS_1_BOOTSTRAPSERVERS: "conduktor-gateway:6969"
+      # CDK_CLUSTERS_1_SCHEMAREGISTRY_URL: "http://redpanda-0:18081"
+      # CDK_CLUSTERS_1_KAFKAFLAVOR_URL: "http://conduktor-gateway:8888"
+      # CDK_CLUSTERS_1_KAFKAFLAVOR_USER: "admin"
+      # CDK_CLUSTERS_1_KAFKAFLAVOR_PASSWORD: "conduktor"
+      # CDK_CLUSTERS_1_KAFKAFLAVOR_VIRTUALCLUSTER: "passthrough"
+      # CDK_CLUSTERS_1_KAFKAFLAVOR_TYPE: "Gateway"
+      # CDK_CLUSTERS_1_COLOR: "#6A57C8"
+      # CDK_CLUSTERS_1_ICON: "dog"
       CDK_MONITORING_CORTEX-URL: http://conduktor-monitoring:9009/
       CDK_MONITORING_ALERT-MANAGER-URL: http://conduktor-monitoring:9010/
       CDK_MONITORING_CALLBACK-URL: http://conduktor-platform:8080/monitoring/api/
@@ -97,35 +87,35 @@ services:
   #     CDK_CONSOLE-URL: "http://conduktor-platform:8080"
 
   
-  conduktor-gateway:
-    image: conduktor/conduktor-gateway:3.1.1
-    hostname: conduktor-gateway
-    container_name: conduktor-gateway
-    environment:
-      KAFKA_BOOTSTRAP_SERVERS: redpanda-0:9092
-    ports:
-      - "8888:8888"
-    healthcheck:
-      test: curl localhost:8888/health
-      interval: 5s
-      retries: 25
-    depends_on:
-      redpanda-0:
-        condition: service_healthy
+  # conduktor-gateway:
+  #   image: conduktor/conduktor-gateway:3.1.1
+  #   hostname: conduktor-gateway
+  #   container_name: conduktor-gateway
+  #   environment:
+  #     KAFKA_BOOTSTRAP_SERVERS: redpanda-0:9092
+  #   ports:
+  #     - "8888:8888"
+  #   healthcheck:
+  #     test: curl localhost:8888/health
+  #     interval: 5s
+  #     retries: 25
+  #   depends_on:
+  #     redpanda-0:
+  #       condition: service_healthy
   
-  conduktor-data-generator:
-    image: conduktor/conduktor-data-generator:0.4
-    container_name: conduktor-data-generator
-    environment:
-      KAFKA_BOOTSTRAP_SERVERS: conduktor-gateway:6969
-      KAFKA_SCHEMA_REGISTRY_URL: http://redpanda-0:8081
-      GATEWAY_ADMIN_API: http://conduktor-gateway:8888
-    restart: on-failure
-    depends_on:
-      redpanda-0:
-        condition: service_healthy
-      conduktor-gateway:
-        condition: service_healthy
+  # conduktor-data-generator:
+  #   image: conduktor/conduktor-data-generator:0.4
+  #   container_name: conduktor-data-generator
+  #   environment:
+  #     KAFKA_BOOTSTRAP_SERVERS: conduktor-gateway:6969
+  #     KAFKA_SCHEMA_REGISTRY_URL: http://redpanda-0:8081
+  #     GATEWAY_ADMIN_API: http://conduktor-gateway:8888
+  #   restart: on-failure
+  #   depends_on:
+  #     redpanda-0:
+  #       condition: service_healthy
+  #     conduktor-gateway:
+  #       condition: service_healthy
 volumes:
   pg_data: {}
   conduktor_data: {}
