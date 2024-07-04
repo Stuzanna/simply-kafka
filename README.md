@@ -21,7 +21,7 @@ Steps involved in it's creation included:
 *Screenshot from Conduktor's UI of the message in Kafka.*
 ![message in Kafka](tfl/img/message-in-kafka.png)
 
-This leverages an adjusted [Conduktor](https://www.conduktor.io) Docker compose stack for local development, containing a Kafka cluster tooling.
+This leverages an adjusted [Conduktor](https://www.conduktor.io) Docker compose stack for local development, containing a Kafka cluster and tooling.
 
 
 # Acknowledgements
