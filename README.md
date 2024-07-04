@@ -1,6 +1,13 @@
 # simply-kafka
 Some simple explorations, providing easy to understand reusable examples to get to grips when starting with Kafka.
 
+# Getting Started
+`docker compose up -d`  
+Will start the local Kafka cluster, a [data generator](https://github.com/Stuzanna/kafka-data-generator), Conduktor UI for interacting with Kafka on [localhost:8080](http://localhost:8080).
+
+Running the TFL script will populate a topic with tube details from the TFL API, see below for more.
+
+The consumer folder gives examples of how to consume this data that you can copy.
 
 # TFL Tube Stream
 Data generator, live stream of data from the next tube approaching the Stockwell underground station from the Transport for London API.
