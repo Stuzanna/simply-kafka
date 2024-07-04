@@ -2,7 +2,7 @@ from quixstreams import Application
 import json
 import time
 
-# Consumer based off the Quix model, use of streaming data frame (SDF)
+# Consumer based off the Quix model
 # Application top level object
 
 app = Application (
