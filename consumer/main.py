@@ -8,7 +8,7 @@ from confluent_kafka.schema_registry.avro import AvroDeserializer
 # -- Config --
 
 bootstrap_servers = "localhost:19092"
-topics = ["customers"]
+topics = ["stu-json"]
 client_id = "myClientId"
 consumer_group = "stu-consumer-group"
 schema_registry_url = "http://localhost:18081"
@@ -55,28 +55,37 @@ try:
     print(f"Subscribed to topics: {topics}")
 
     while running:
-        msg = consumer.poll(timeout=1.0)
-        if msg is None: 
-            print("Waiting for message...")
-            continue
-
-        if msg.error():
-            if msg.error().code() == KafkaError._PARTITION_EOF:
-                # End of partition event
-                sys.stderr.write('%% %s [%d] reached end at offset %d\n' %
-                                 (msg.topic(), msg.partition(), msg.offset()))
-            elif msg.error():
-                raise KafkaException(msg.error())
-        else:
-            try:
-                value = msg.value()
-                key = msg.key()
-                print(f"{msg.partition()}:{msg.offset()}: "
-                      f"k={msg.key()} "
-                      f"v={msg.value()}")
-            except Exception as e:
-                print(f"Message deserialization failed: {e}")
+        try:
+            msg = consumer.poll(timeout=1.0)
+            if msg is None: 
+                print("Waiting for message...")
                 continue
+
+            if msg.error():
+                if msg.error().code() == KafkaError._PARTITION_EOF:
+                    # End of partition event
+                    sys.stderr.write('%% %s [%d] reached end at offset %d\n' %
+                                    (msg.topic(), msg.partition(), msg.offset()))
+                elif msg.error():
+                    raise KafkaException(msg.error())
+            else:
+                try:
+                    value = msg.value()
+                    key = msg.key()
+                    if key is None:
+                        print(f"{msg.partition()}:{msg.offset()}: "
+                            f"k=None "
+                            f"v={value}")
+                    else:
+                        print(f"{msg.partition()}:{msg.offset()}: "
+                            f"k={key} "
+                            f"v={value}")
+                except Exception as e:
+                    print(f"Message deserialization failed: {e}")
+                    continue
+        except Exception as e:
+            # Handle the case where deserialization fails
+            print(f"Message polling/deserialization failed: {e}")
 finally:
     # Close down consumer to commit final offsets.
     consumer.close()    
