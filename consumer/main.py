@@ -33,10 +33,8 @@ conf = {
     # 'ssl.ca.location': '../sslcerts/ca.pem',
     # 'ssl.certificate.location': '../sslcerts/service.cert',
     # 'ssl.key.location': '../sslcerts/service.key', 
-    # 'key.deserializer': json_deserializer, # if key in JSON use these two
-    # 'value.deserializer': json_deserializer,
-    # 'key.deserializer': avro_deserializer, # key
-    'value.deserializer': avro_deserializer,
+    'value.deserializer': json_deserializer,
+    # 'value.deserializer': avro_deserializer,
     'auto.offset.reset': offset_config,
     }
 
