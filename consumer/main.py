@@ -66,20 +66,23 @@ try:
                     # End of partition event
                     sys.stderr.write('%% %s [%d] reached end at offset %d\n' %
                                     (msg.topic(), msg.partition(), msg.offset()))
-                elif msg.error():
+                else:
                     raise KafkaException(msg.error())
+
             else:
                 try:
-                    value = msg.value()
                     key = msg.key()
                     if key is None:
-                        print(f"{msg.partition()}:{msg.offset()}: "
-                            f"k=None "
-                            f"v={value}")
+                        key_str = "None"
+                    elif KafkaError.val() == -160:
+                        key_str = "None"
                     else:
-                        print(f"{msg.partition()}:{msg.offset()}: "
-                            f"k={key} "
-                            f"v={value}")
+                        key_str = key
+
+                    value = msg.value()
+                    print(f"{msg.partition()}:{msg.offset()}: "
+                        f"k={key_str} "
+                        f"v={value}")
                 except Exception as e:
                     print(f"Message deserialization failed: {e}")
                     continue
