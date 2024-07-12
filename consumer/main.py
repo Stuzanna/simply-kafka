@@ -1,18 +1,26 @@
 import json
 import sys
-from confluent_kafka import DeserializingConsumer
+
+from confluent_kafka import DeserializingConsumer, KafkaError, KafkaException
+from confluent_kafka.schema_registry import SchemaRegistryClient
+from confluent_kafka.schema_registry.avro import AvroDeserializer
 
 # -- Config --
-
 bootstrap_servers = "localhost:19092"
 topics = ["customers"]
-client_id = "myClientId"
-consumer_group = "stu-consumer-group"
+timeout = 1.0 # Maximum time to block waiting for message(Seconds)
+client_id = "my-client-id"
+consumer_group = "my-consumer-group"
+schema_registry_url = "http://localhost:18081"
+schema_registry_conf = {'url': schema_registry_url}
 offset_config = "earliest"
 
-# -- Creating the Consumer ---
+#  --- Construction ---
+schema_registry_client = SchemaRegistryClient(schema_registry_conf)
 
-def json_serializer(msg, s_obj=None):
+avro_deserializer = AvroDeserializer(schema_registry_client)
+
+def json_deserializer(msg, s_obj=None):
     # return json.loads(msg.decode('ascii'))
     return json.loads(msg)
 
@@ -24,13 +32,13 @@ conf = {
     # 'ssl.ca.location': '../sslcerts/ca.pem',
     # 'ssl.certificate.location': '../sslcerts/service.cert',
     # 'ssl.key.location': '../sslcerts/service.key', 
-    # 'key.deserializer': json_serializer, # if key in JSON
-    'value.deserializer': json_serializer,
+    # 'value.deserializer': json_deserializer, #comment me in for JSON
+    'value.deserializer': avro_deserializer, #comment me in for Avro
     'auto.offset.reset': offset_config,
     }
 
+# --- Creating the Consumer ---
 consumer = DeserializingConsumer(conf)
-
 
 # --- Running the consumer ---
 
@@ -39,24 +47,23 @@ running = True
 try:
     consumer.subscribe(topics)
     print(f"Subscribed to topics: {topics}")
+    print(f"Timeout set for every {timeout} seconds")
 
     while running:
-        msg = consumer.poll(timeout=1.0)
-        if msg is None: 
-            print("Waiting for message...")
-            continue
+        try:
+            msg = consumer.poll(timeout)
+            if msg is None: 
+                print("Waiting for message...")
+                continue
 
-        if msg.error():
-            if msg.error().code() == KafkaError._PARTITION_EOF:
-                # End of partition event
-                sys.stderr.write('%% %s [%d] reached end at offset %d\n' %
-                                 (msg.topic(), msg.partition(), msg.offset()))
-            elif msg.error():
-                raise KafkaException(msg.error())
-        else:
-             print(f"{msg.partition()}:{msg.offset()}: "
-                  f"k={msg.key()} "
-                  f"v={msg.value()}")
+            else:
+                    key = msg.key()
+                    value = msg.value()
+                    print(f"{msg.partition()}:{msg.offset()}: "
+                        f"k={key} "
+                        f"v={value}")
+        except Exception as e:
+            print(f"Error reading message: {e}")
 finally:
     # Close down consumer to commit final offsets.
     consumer.close()    

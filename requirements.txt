@@ -20,6 +20,7 @@ decorator==5.1.1
 distro @ file:///private/var/folders/nz/j6p8yfhx1mv_0grj5xl4650h0000gp/T/abs_10ye1wu827/croot/distro_1701455019085/work
 executing==2.0.1
 Faker==21.0.0
+fastavro==1.9.5
 idna==3.7
 ipykernel==6.29.4
 ipython==8.26.0
