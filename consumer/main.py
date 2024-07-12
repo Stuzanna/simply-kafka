@@ -8,6 +8,7 @@ from confluent_kafka.schema_registry.avro import AvroDeserializer
 # -- Config --
 bootstrap_servers = "localhost:19092"
 topics = ["stu-json"]
+timeout = 1.0 # Maximum time to block waiting for message(Seconds)
 client_id = "my-client-id"
 consumer_group = "my-consumer-group"
 schema_registry_url = "http://localhost:18081"
@@ -46,35 +47,23 @@ running = True
 try:
     consumer.subscribe(topics)
     print(f"Subscribed to topics: {topics}")
+    print(f"Timeout set for every {timeout} seconds")
 
     while running:
         try:
-            msg = consumer.poll(timeout=1.0)
+            msg = consumer.poll(timeout)
             if msg is None: 
                 print("Waiting for message...")
                 continue
 
-            if msg.error():
-                if msg.error().code() == KafkaError._PARTITION_EOF:
-                    # End of partition event
-                    sys.stderr.write('%% %s [%d] reached end at offset %d\n' %
-                                    (msg.topic(), msg.partition(), msg.offset()))
-                else:
-                    raise KafkaException(msg.error())
-
             else:
-                try:
                     key = msg.key()
                     value = msg.value()
                     print(f"{msg.partition()}:{msg.offset()}: "
                         f"k={key} "
                         f"v={value}")
-                except Exception as e:
-                    print(f"Message deserialization failed: {e}")
-                    continue
         except Exception as e:
-            # Handle the case where deserialization fails
-            print(f"Message polling/deserialization failed: {e}")
+            print(f"Error reading message: {e}")
 finally:
     # Close down consumer to commit final offsets.
     consumer.close()    
