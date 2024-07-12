@@ -7,7 +7,7 @@ from confluent_kafka.schema_registry.avro import AvroDeserializer
 
 # -- Config --
 bootstrap_servers = "localhost:19092"
-topics = ["stu-json"]
+topics = ["customers"]
 timeout = 1.0 # Maximum time to block waiting for message(Seconds)
 client_id = "my-client-id"
 consumer_group = "my-consumer-group"
@@ -32,8 +32,8 @@ conf = {
     # 'ssl.ca.location': '../sslcerts/ca.pem',
     # 'ssl.certificate.location': '../sslcerts/service.cert',
     # 'ssl.key.location': '../sslcerts/service.key', 
-    'value.deserializer': json_deserializer, #comment me in for JSON
-    # 'value.deserializer': avro_deserializer, #comment me in for Avro
+    # 'value.deserializer': json_deserializer, #comment me in for JSON
+    'value.deserializer': avro_deserializer, #comment me in for Avro
     'auto.offset.reset': offset_config,
     }
 
