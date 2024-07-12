@@ -4,8 +4,6 @@ import sys
 from confluent_kafka import DeserializingConsumer, KafkaError, KafkaException
 from confluent_kafka.schema_registry import SchemaRegistryClient
 from confluent_kafka.schema_registry.avro import AvroDeserializer
-from confluent_kafka.serialization import StringDeserializer
-
 
 # -- Config --
 bootstrap_servers = "localhost:19092"
