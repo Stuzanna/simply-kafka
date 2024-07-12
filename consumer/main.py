@@ -4,29 +4,27 @@ import sys
 from confluent_kafka import DeserializingConsumer, KafkaError, KafkaException
 from confluent_kafka.schema_registry import SchemaRegistryClient
 from confluent_kafka.schema_registry.avro import AvroDeserializer
+from confluent_kafka.serialization import StringDeserializer
+
 
 # -- Config --
-
 bootstrap_servers = "localhost:19092"
-topics = ["stu-json"]
-client_id = "myClientId"
-consumer_group = "stu-consumer-group"
+topics = ["customers"]
+client_id = "my-client-id"
+consumer_group = "my-consumer-group"
 schema_registry_url = "http://localhost:18081"
+schema_registry_conf = {'url': schema_registry_url}
 offset_config = "earliest"
 
-# -- Schema Registry Client ---
-schema_registry_conf = {'url': schema_registry_url}
+#  --- Construction ---
 schema_registry_client = SchemaRegistryClient(schema_registry_conf)
 
-# --- Creating the Consumer ---
-#   --- Serializers ---
+avro_deserializer = AvroDeserializer(schema_registry_client)
+
 def json_deserializer(msg, s_obj=None):
     # return json.loads(msg.decode('ascii'))
     return json.loads(msg)
 
-avro_deserializer = AvroDeserializer(schema_registry_client)
-
-#  --- Config ---
 conf = {
     'bootstrap.servers': bootstrap_servers,
     'client.id': client_id,
@@ -36,15 +34,14 @@ conf = {
     # 'ssl.certificate.location': '../sslcerts/service.cert',
     # 'ssl.key.location': '../sslcerts/service.key', 
     # 'key.deserializer': json_deserializer, # if key in JSON use these two
-    'value.deserializer': json_deserializer,
-    # 'key.deserializer': avro_deserializer, # if key in avro use these two
-    # 'value.deserializer': avro_deserializer,
-    # 'schema.registry.url': schema_registry_url,
+    # 'value.deserializer': json_deserializer,
+    # 'key.deserializer': avro_deserializer, # key
+    'value.deserializer': avro_deserializer,
     'auto.offset.reset': offset_config,
     }
 
+# --- Creating the Consumer ---
 consumer = DeserializingConsumer(conf)
-
 
 # --- Running the consumer ---
 
@@ -74,7 +71,7 @@ try:
                     key = msg.key()
                     if key is None:
                         key_str = "None"
-                    elif key is "N/A":
+                    elif key == "N/A":
                         key_str = "None"
                     else:
                         key_str = key
