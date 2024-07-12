@@ -35,7 +35,7 @@ conf = {
     # 'ssl.ca.location': '../sslcerts/ca.pem',
     # 'ssl.certificate.location': '../sslcerts/service.cert',
     # 'ssl.key.location': '../sslcerts/service.key', 
-    'key.deserializer': json_deserializer, # if key in JSON use these two
+    # 'key.deserializer': json_deserializer, # if key in JSON use these two
     'value.deserializer': json_deserializer,
     # 'key.deserializer': avro_deserializer, # if key in avro use these two
     # 'value.deserializer': avro_deserializer,
@@ -74,7 +74,7 @@ try:
                     key = msg.key()
                     if key is None:
                         key_str = "None"
-                    elif KafkaError.val() == -160:
+                    elif key is "N/A":
                         key_str = "None"
                     else:
                         key_str = key
