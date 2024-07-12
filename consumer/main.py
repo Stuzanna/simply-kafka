@@ -7,7 +7,7 @@ from confluent_kafka.schema_registry.avro import AvroDeserializer
 
 # -- Config --
 bootstrap_servers = "localhost:19092"
-topics = ["customers"]
+topics = ["stu-json"]
 client_id = "my-client-id"
 consumer_group = "my-consumer-group"
 schema_registry_url = "http://localhost:18081"
@@ -31,8 +31,8 @@ conf = {
     # 'ssl.ca.location': '../sslcerts/ca.pem',
     # 'ssl.certificate.location': '../sslcerts/service.cert',
     # 'ssl.key.location': '../sslcerts/service.key', 
-    'value.deserializer': json_deserializer,
-    # 'value.deserializer': avro_deserializer,
+    'value.deserializer': json_deserializer, #comment me in for JSON
+    # 'value.deserializer': avro_deserializer, #comment me in for Avro
     'auto.offset.reset': offset_config,
     }
 
@@ -65,16 +65,9 @@ try:
             else:
                 try:
                     key = msg.key()
-                    if key is None:
-                        key_str = "None"
-                    elif key == "N/A":
-                        key_str = "None"
-                    else:
-                        key_str = key
-
                     value = msg.value()
                     print(f"{msg.partition()}:{msg.offset()}: "
-                        f"k={key_str} "
+                        f"k={key} "
                         f"v={value}")
                 except Exception as e:
                     print(f"Message deserialization failed: {e}")
