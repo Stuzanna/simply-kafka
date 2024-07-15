@@ -88,12 +88,10 @@ def main():
             # vehicleId, stationName, platformName, timestamp, timeToStation, currentLocation, towards
             if not tube:
                 tube = ['N/A']
-            # vehicleId = tube[0]['vehicleId'] if tube else 'N/A'
             vehicleId = tube['vehicleId'] if tube else 'N/A'
             logging.debug(f"Got vehicle: {vehicleId}")
             producer.produce(
                 topic="tfl-tubes",
-                # key=tube[0]['stationName'] if tube else 'N/A',
                 key=tube['stationName'] if tube else 'N/A',
                 value=json.dumps(tube),
                 headers= {"app.name": "python-quix"}
