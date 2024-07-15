@@ -49,8 +49,6 @@ def get_tube_arrivals(line_id, stop_point_id, direction, app_key, retries=3, bac
             data = response.json()
 
             logging.debug(f"API response: {data}")
-            # if data:  # If response is not empty, return it
-            #     return data
             if isinstance(data, list) and len(data) > 0:
                 return data[0]  
             
