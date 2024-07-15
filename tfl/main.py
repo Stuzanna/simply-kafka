@@ -41,19 +41,24 @@ def get_tube_arrivals(line_id, stop_point_id, direction, app_key, retries=3, bac
             'direction': direction,
             'app_key': app_key,
         }
+    data = {}
     for attempt in range(retries):
-        response = requests.get(url, params)
-        response.raise_for_status()  # Raise an exception for HTTP errors
-        data = response.json()
+        try:
+            response = requests.get(url, params)
+            response.raise_for_status()  # Raise an exception for HTTP errors
+            data = response.json()
 
-        logging.debug(f"API response: {data}")
-        if data:  # If response is not empty, return it
-            return data
-        
-        logging.warning(f"Attempt {attempt+1} returned empty response.")
-        time.sleep(backoff * (attempt + 1))  # Exponential backoff
+            logging.debug(f"API response: {data}")
+            # if data:  # If response is not empty, return it
+            #     return data
+            if isinstance(data, list) and len(data) > 0:
+                return data[0]  
+            
+        except requests.exceptions.RequestException as e:
+            logging.warning(f"Attempt {attempt+1} returned empty response.")
+            time.sleep(backoff * (attempt + 1))  # Exponential backoff
 
-        return [{'vehicleId': 'N/A', 'stationName': 'N/A'}]  # Return default if all retries fail
+    return {'vehicleId': 'N/A', 'stationName': 'N/A'}  # Return default if all retries fail
 
 
 # --- Get data from the API ---
@@ -83,11 +88,13 @@ def main():
             # vehicleId, stationName, platformName, timestamp, timeToStation, currentLocation, towards
             if not tube:
                 tube = ['N/A']
-            vehicleId = tube[0]['vehicleId'] if tube else 'N/A'
+            # vehicleId = tube[0]['vehicleId'] if tube else 'N/A'
+            vehicleId = tube['vehicleId'] if tube else 'N/A'
             logging.debug(f"Got vehicle: {vehicleId}")
             producer.produce(
                 topic="tfl-tubes",
-                key=tube[0]['stationName'] if tube else 'N/A',
+                # key=tube[0]['stationName'] if tube else 'N/A',
+                key=tube['stationName'] if tube else 'N/A',
                 value=json.dumps(tube),
                 headers= {"app.name": "python-quix"}
             )
