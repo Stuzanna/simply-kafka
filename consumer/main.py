@@ -52,7 +52,7 @@ try:
             else:
                     if deserialiation == "json":
                         key = msg.key().decode('utf-8')
-                        value = msg.value()
+                        value = msg.value().decode('utf-8')
                         print(f"{msg.partition()}:{msg.offset()}: "
                             f"k={key} "
                             f"v={value}")
