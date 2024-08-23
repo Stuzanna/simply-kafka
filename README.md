@@ -30,6 +30,14 @@ Steps involved in it's creation included:
 
 This leverages an adjusted [Conduktor](https://www.conduktor.io) Docker compose stack for local development, containing a Kafka cluster and tooling.
 
+To run this yourself:
+
+1. Install `requirements.txt`
+1. Get an API key from TFL by signing-up for an account on [their website](https://api-portal.tfl.gov.uk/signup) and generating one
+1. Create a file `.env` within `tfl` directory, setting your API key as `TFL_API_KEY`
+1. Run `tfl/main.py`
+1. View results using Conduktor if you run the Docker compose, or run the consumer script in `consumer/`
+
 
 # Acknowledgements
 [Aiven](https://github.com/Aiven-Labs/python-fake-data-producer-for-apache-kafka) and [Quix](simple-kafka-python) for some producer & consumer examples to model my own around.
