@@ -1,13 +1,15 @@
 # simply-kafka
 Some simple explorations, providing easy to understand reusable examples to get to grips when starting with Kafka.
 
+Examples include;
+
+* A getting started stack to have a simple example running locally
+* A TFL stream of live tube data from their public API
+* Consumer gives some example consumers, using confluent_kafka library, or Quix's library
+
 # Getting Started
 `docker compose up -d`  
 Will start the local Kafka cluster, a [data generator](https://github.com/Stuzanna/kafka-data-generator), Conduktor UI for interacting with Kafka on [localhost:8080](http://localhost:8080).
-
-Running the TFL script will populate a topic with tube details from the TFL API, see below for more.
-
-The consumer folder gives examples of how to consume this data that you can copy.
 
 # TFL Tube Stream
 Data generator, live stream of data from the next tube approaching the Stockwell underground station from the Transport for London API.
@@ -38,6 +40,9 @@ To run this yourself:
 1. Run `tfl/main.py`
 1. View results using Conduktor if you run the Docker compose, or run the consumer script in `consumer/`
 
+# working-with-schemas
+The other examples don't include schemas to keep the boilerplate more minimal.
+Read through this folder to see examples using local schemas, remote schemas on the Confluent schema registry, for both Avro and JSON schema types.
 
 # Acknowledgements
-[Aiven](https://github.com/Aiven-Labs/python-fake-data-producer-for-apache-kafka) and [Quix](simple-kafka-python) for some producer & consumer examples to model my own around.
+[Aiven](https://github.com/Aiven-Labs/python-fake-data-producer-for-apache-kafka), [Quix](simple-kafka-python) and [Confluent](https://developer.confluent.io/courses/kafka-python/intro/) content for producer & consumer examples to model my own around.
