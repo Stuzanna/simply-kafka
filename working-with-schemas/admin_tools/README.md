@@ -1,0 +1,1 @@
+Some tools to support topic creation. Check a topic if true or false a topic exists, and to create topic.
